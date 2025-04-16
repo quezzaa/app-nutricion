@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Let me cook!</string>
+    <string name="title_activity_main">Let me cook!</string>
+    <string name="package_name">com.quezz.letmecook</string>
+    <string name="custom_url_scheme">com.quezz.letmecook</string>
+</resources>
