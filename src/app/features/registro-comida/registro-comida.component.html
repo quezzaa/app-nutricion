@@ -1,1 +1,61 @@
-<p>registro-comida works!</p>
+<div class="container mt-4">
+    <h5 class="text-center mb-3">Registrar Comida del Día</h5>
+  
+    <div class="card shadow-sm mb-3">
+      <div class="card-body row g-2">
+        <div class="col-md-6">
+          <label class="form-label">Alimento</label>
+          <select class="form-select" [(ngModel)]="alimentoSeleccionado">
+            <option [ngValue]="null">Selecciona un alimento</option>
+            <option *ngFor="let a of alimentosDisponibles" [ngValue]="a">{{ a.nombre }}</option>
+          </select>
+        </div>
+  
+        <div class="col-md-4">
+          <label class="form-label">
+            Cantidad 
+            <span *ngIf="alimentoSeleccionado?.tipo === 'ml'">(ml)</span>
+            <span *ngIf="alimentoSeleccionado?.tipo === 'g' || !alimentoSeleccionado?.tipo">(g)</span>
+          </label>
+          <input type="number" class="form-control" [(ngModel)]="cantidad" min="1">
+        </div>
+  
+        <div class="col-md-2 d-flex align-items-end">
+          <button class="btn btn-dark w-100" (click)="agregarAlimento()">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="alimentosAgregados.length > 0" class="card shadow-sm">
+      <div class="card-header bg-dark text-white">Comida actual</div>
+      <div class="card-body">
+        <ul class="list-group mb-3">
+          <li class="list-group-item" *ngFor="let a of alimentosAgregados">
+            {{ a.cantidad }}{{ a.tipo }} de {{ a.nombre }} — 
+            {{ a.proteina }}g prot, 
+            {{ a.carbohidratos }}g carb, 
+            {{ a.grasas }}g grasa, 
+            {{ a.calorias }} kcal
+          </li>
+        </ul>
+  
+        <div class="border-top pt-3">
+          <p><strong>Totales:</strong></p>
+          <p>
+            Proteína: {{ totales.proteina | number:'1.2-2' }}g |
+            Carbohidratos: {{ totales.carbohidratos | number:'1.2-2' }}g |
+            Grasas: {{ totales.grasas | number:'1.2-2' }}g |
+            Calorías: {{ totales.calorias | number:'1.2-2' }} kcal
+          </p>
+        </div>
+  
+        <button class="btn btn-dark w-100 mt-3" (click)="guardarComida()">
+          <i class="bi bi-check-circle-fill me-1"></i> Guardar Comida
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  

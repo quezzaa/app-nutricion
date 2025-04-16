@@ -31,6 +31,9 @@ usuario={
 }
 
 
-  eliminarCuenta() {}
+  eliminarCuenta() {
+      // Aquí va la lógica para eliminar la cuenta, ejemplo:
+      console.log('Cuenta eliminada');
+  }
   guardarCambios() {}
 }
