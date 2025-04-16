@@ -1,1 +1,56 @@
-<p>formulario-alimento works!</p>
+<div class="container mt-4 mb-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Registrar Alimento</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="guardarAlimento()">
+          <div class="form-floating mb-3">
+            <input type="text" id="nombre" class="form-control" [(ngModel)]="alimento.nombre" name="nombre" required>
+            <label for="nombre">Nombre del alimento</label>
+          </div>
+  
+          <hr class="my-4">
+          <h6 class="text-muted">Por cada 100g de alimento:</h6>
+  
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="calorias" class="form-label">Calorías</label>
+              <input type="number" id="calorias" class="form-control" [(ngModel)]="alimento.calorias" name="calorias">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="proteina" class="form-label">Proteína (g)</label>
+              <input type="number" id="proteina" class="form-control" [(ngModel)]="alimento.proteina" name="proteina">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="carbohidratos" class="form-label">Carbohidratos (g)</label>
+              <input type="number" id="carbohidratos" class="form-control" [(ngModel)]="alimento.carbohidratos" name="carbohidratos">
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="grasas" class="form-label">Grasas (g)</label>
+              <input type="number" id="grasas" class="form-control" [(ngModel)]="alimento.grasas" name="grasas">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="sodio" class="form-label">Sodio (mg)</label>
+              <input type="number" id="sodio" class="form-control" [(ngModel)]="alimento.sodio" name="sodio">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="fibra" class="form-label">Fibra (g)</label>
+              <input type="number" id="fibra" class="form-control" [(ngModel)]="alimento.fibra" name="fibra">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="azucares" class="form-label">Azúcares (g)</label>
+              <input type="number" id="azucares" class="form-control" [(ngModel)]="alimento.azucares" name="azucares">
+            </div>
+          </div>
+  
+          <button type="submit" class="btn btn-dark w-100 mt-3">Guardar alimento</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  

@@ -7,7 +7,7 @@ import { FormularioPerfilComponent } from './features/perfil-usuario/formulario-
 import { ResumenComponent } from './features/resumen-dia/resumen/resumen.component';
 import { EstablecerMetasComponent } from './features/metas/establecer-metas/establecer-metas.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: 'registro-alimento', component: FormularioAlimentoComponent },
   { path: 'resumen-dia', component: ResumenComponent },
   { path: 'estadisticas', component: GraficoDiarioComponent },
@@ -17,4 +17,5 @@ const routes: Routes = [
   { path: 'configuracion', component: AjustesComponent},
   { path: '', redirectTo: '/resumen-dia', pathMatch: 'full' },
 ];
+
 
