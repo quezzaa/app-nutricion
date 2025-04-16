@@ -1,1 +1,23 @@
-<p>formulario-agua works!</p>
+<div class="container mt-4 mb-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Registrar Agua Consumida</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="guardarAgua()">
+          <div class="form-floating mb-3">
+            <input type="number" id="cantidad" class="form-control" [(ngModel)]="agua.cantidad" name="cantidad" required>
+            <label for="cantidad">Cantidad de agua (en mililitros)</label>
+          </div>
+  
+          <div class="mb-3">
+            <label for="hora" class="form-label">Hora de consumo</label>
+            <input type="time" id="hora" class="form-control" [(ngModel)]="agua.hora" name="hora" required>
+          </div>
+  
+          <button type="submit" class="btn btn-dark w-100 mt-3">Registrar insumo</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
