@@ -1,0 +1,21 @@
+<div class="container mt-4" style="padding-bottom: 90px;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h4 class="text-center mb-4">Estadisticas</h4>
+        </div>
+        <div class="mt-2" class="card-body">
+            <!-- Gráfico de la Semana -->
+            <div style="display: block;">
+                <canvas #semanaChart baseChart [data]="barChartDataSemana" [options]="barChartOptionsSemana" [type]="'bar'">
+                </canvas>
+            </div>
+
+            <!-- Gráfico del Mes -->
+            <div class="mt-2">
+                <canvas #mesChart baseChart [data]="barChartDataMes" [options]="barChartOptionsMes" [type]="'bar'">
+                </canvas>
+            </div>
+
+
+        </div>
+    </div>
