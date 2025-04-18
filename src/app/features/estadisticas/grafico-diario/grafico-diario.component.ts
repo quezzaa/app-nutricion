@@ -5,11 +5,11 @@ import { RegistroComida } from '../../../Models/comida.model';
 import { Agua } from '../../../Models/agua.model';
 import { ToastrService } from 'ngx-toastr';
 @Component({
-  selector: 'app-grafico-diario',
-  standalone: true,
-  imports: [],
-  templateUrl: './grafico-diario.component.html',
-  styleUrl: './grafico-diario.component.css'
+    selector: 'app-grafico-diario',
+    standalone: true,
+    imports: [],
+    templateUrl: './grafico-diario.component.html',
+    styleUrl: './grafico-diario.component.css'
 })
 export class GraficoDiarioComponent {
   resumenSemanal = this.resetResumen();

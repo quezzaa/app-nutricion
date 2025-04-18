@@ -1,17 +1,16 @@
-import { ChangeDetectorRef, Component, inject, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComidaServiceService } from '../../../services/comida-service.service';
 import { AjustesPerfilServiceService } from '../../../services/ajustes-perfil-service.service';
 import { AguaServiceService } from '../../../services/agua-service.service';
 import { RegistroComida } from '../../../Models/comida.model';
 import { Agua } from '../../../Models/agua.model';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 @Component({
-  selector: 'app-resumen',
-  standalone: true,
-  imports: [CommonModule,NgCircleProgressModule],
-  templateUrl: './resumen.component.html',
-  styleUrl: './resumen.component.css',
+    selector: 'app-resumen',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './resumen.component.html',
+    styleUrl: './resumen.component.css'
 })
 export class ResumenComponent implements OnInit {
   constructor(private AService:AjustesPerfilServiceService,private CService:ComidaServiceService,

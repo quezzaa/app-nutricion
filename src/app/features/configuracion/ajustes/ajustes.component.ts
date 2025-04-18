@@ -7,11 +7,11 @@ import { AjustesPerfilServiceService } from '../../../services/ajustes-perfil-se
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-ajustes',
-  standalone: true,
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './ajustes.component.html',
-  styleUrl: './ajustes.component.css'
+    selector: 'app-ajustes',
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+    templateUrl: './ajustes.component.html',
+    styleUrl: './ajustes.component.css'
 })
 export class AjustesComponent implements OnInit {
 Sexos = [{ value: '1', label: 'Masculino' }

@@ -7,11 +7,11 @@ import { ToastrService } from 'ngx-toastr';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-formulario-agua',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './formulario-agua.component.html',
-  styleUrl: './formulario-agua.component.css'
+    selector: 'app-formulario-agua',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
+    templateUrl: './formulario-agua.component.html',
+    styleUrl: './formulario-agua.component.css'
 })
 export class FormularioAguaComponent implements OnInit {
   agua: Agua = { id:'',cantidad: 0, Fecha: '' };

@@ -8,11 +8,11 @@ import { AlimentosServiceService } from '../../services/alimentos-service.servic
 import { v4 as uuidv4 } from 'uuid';
 import { ComidaServiceService } from '../../services/comida-service.service';
 @Component({
-  selector: 'app-registro-comida',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './registro-comida.component.html',
-  styleUrl: './registro-comida.component.css'
+    selector: 'app-registro-comida',
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './registro-comida.component.html',
+    styleUrl: './registro-comida.component.css'
 })
 export class RegistroComidaComponent implements OnInit {
   alimentosDisponibles: Alimento[] = [];

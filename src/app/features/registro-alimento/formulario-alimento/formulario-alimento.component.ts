@@ -8,11 +8,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 @Component({
-  selector: 'app-formulario-alimento',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './formulario-alimento.component.html',
-  styleUrl: './formulario-alimento.component.css'
+    selector: 'app-formulario-alimento',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
+    templateUrl: './formulario-alimento.component.html',
+    styleUrl: './formulario-alimento.component.css'
 })
 export class FormularioAlimentoComponent implements OnInit {
   alimento: Alimento = {
