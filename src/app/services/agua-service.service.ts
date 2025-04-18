@@ -35,10 +35,29 @@ export class AguaServiceService {
 
   async obtenerSoloDeHoy(): Promise<Agua[]> {
     const hoy = new Date();
-    const hoyLocal = hoy.toLocaleDateString('en-CA'); // Formato 'YYYY-MM-DD'
+    const hoyLocal = hoy.toLocaleDateString('en-CA');
     const lista = await this.obtenerAgua();
     return lista.filter(a => new Date(a.Fecha).toLocaleDateString('en-CA') === hoyLocal);
   }
-  
-  
+
+  async obtenerAguaDeLaSemana(): Promise<Agua[]> {
+    const ahora = new Date();
+    const primerDiaSemana = new Date(ahora);
+    primerDiaSemana.setDate(ahora.getDate() - ahora.getDay());
+    const lista = await this.obtenerAgua();
+    return lista.filter(a => {
+      const fecha = new Date(a.Fecha);
+      return fecha >= primerDiaSemana && fecha <= ahora;
+    });
+  }
+
+  async obtenerAguaDelMes(): Promise<Agua[]> {
+    const ahora = new Date();
+    const primerDiaMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+    const lista = await this.obtenerAgua();
+    return lista.filter(a => {
+      const fecha = new Date(a.Fecha);
+      return fecha >= primerDiaMes && fecha <= ahora;
+    });
+  }
 }

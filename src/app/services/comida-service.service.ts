@@ -37,4 +37,25 @@ export class ComidaServiceService {
       value: JSON.stringify(nuevaLista)
     });
   }
+
+  async obtenerComidasDeLaSemana(): Promise<RegistroComida[]> {
+    const ahora = new Date();
+    const primerDiaSemana = new Date(ahora);
+    primerDiaSemana.setDate(ahora.getDate() - ahora.getDay());
+    const lista = await this.obtenerComidas();
+    return lista.filter(c => {
+      const fecha = new Date(c.fecha);
+      return fecha >= primerDiaSemana && fecha <= ahora;
+    });
+  }
+
+  async obtenerComidasDelMes(): Promise<RegistroComida[]> {
+    const ahora = new Date();
+    const primerDiaMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+    const lista = await this.obtenerComidas();
+    return lista.filter(c => {
+      const fecha = new Date(c.fecha);
+      return fecha >= primerDiaMes && fecha <= ahora;
+    });
+  }
 }
