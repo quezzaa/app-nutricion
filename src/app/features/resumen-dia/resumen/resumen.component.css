@@ -1,0 +1,51 @@
+.progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: #d5d5d5f3;
+    border-radius: 10px;
+    margin: 10px 0;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    border-radius: 10px;
+    background-color: #4caf50;
+    transition: width 0.5s ease-in-out;
+  }
+
+  
+  .bar-a{
+    background-color: #1749d2;
+  }
+  .bar-c{
+    background-color: #e74c3c;
+  }
+  
+  .bar-p {
+    background-color: #27ae60;
+  }
+  
+  .bar-ca {
+    background-color: #dd9117;
+  }
+  
+  .bar-g {
+    background-color: #f1c40f;
+  }
+  
+  .bar-s{
+    background-color: #299680; 
+  }
+  
+  .bar-f {
+    background-color: #907122;
+  }
+  
+  .bar-az {
+    background-color: #a73185;
+  }
+  
+
+  .col-6 {
+    padding: 10px;
+  }

@@ -1,64 +1,133 @@
-<div class="container mt-4 mb-5 pb-5">
+<div class="container mt-4 mb-5" style="padding-bottom: 80px;">
   <div class="card shadow-sm">
     <div class="card-header bg-dark text-white">
-      <h5 class="mb-0">Registrar Alimento</h5>
+      <div class="row align-items-center">
+        <div class="col">
+          <h5 class="mb-0">Mis Alimentos</h5>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalAlimento">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="card-body">
-      <form (ngSubmit)="guardarAlimento()">
-        <div class="form-floating mb-3">
-          <input type="text" id="nombre" class="form-control" [(ngModel)]="alimento.nombre" name="nombre" required>
-          <label for="nombre">Nombre del alimento</label>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Tipo de unidad</label>
-          <select class="form-select" [(ngModel)]="alimento.tipo" name="tipo" required>
-            <option value="">Selecciona el tipo</option>
-            <option value="g">Sólido (gramos)</option>
-            <option value="ml">Líquido (mililitros)</option>
-          </select>
-        </div>
-
-        <hr class="my-4">
-        <h6 class="text-muted">Por cada 100{{ alimento.tipo || '(?)' }} de alimento:</h6>
-
-        <div class="row">
-          <div class="col-md-4 mb-3">
-            <label for="calorias" class="form-label">Calorías</label>
-            <input type="number" id="calorias" class="form-control" [(ngModel)]="alimento.calorias" name="calorias">
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="proteina" class="form-label">Proteína (g)</label>
-            <input type="number" id="proteina" class="form-control" [(ngModel)]="alimento.proteina" name="proteina">
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="carbohidratos" class="form-label">Carbohidratos (g)</label>
-            <input type="number" id="carbohidratos" class="form-control" [(ngModel)]="alimento.carbohidratos" name="carbohidratos">
+      <div class="mb-3">
+        <input type="text" [(ngModel)]="busqueda" class="form-control" placeholder="Buscar alimento por nombre...">
+      </div>
+    
+      <div *ngIf="alimentosFiltrados.length > 0; else sinAlimentos">
+        <div *ngFor="let a of alimentosFiltrados; let i = index" class="card mb-2">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="card-title mb-1">{{ a.nombre }}</h6>
+              <p class="card-text mb-0">
+                <span class="macro-calorias">{{ a.calorias }} kcal</span>, 
+                <span class="macro-proteina">{{ a.proteina }}g proteína</span>,
+                <span class="macro-carbohidratos">{{ a.carbohidratos }}g carb</span>, 
+                <span class="macro-grasas">{{ a.grasas }}g grasa</span>, 
+                <span class="macro-sodio">{{ a.sodio }}mg sodio</span>,
+                <span class="macro-fibra">{{ a.fibra }}g fibra</span>, 
+                <span class="macro-azucares">{{ a.azucares }}g azúcares</span>
+              </p>
+            </div>
+            <button class="btn btn-sm btn-outline-danger" (click)="abrirModalEliminar(a)" data-bs-toggle="modal" data-bs-target="#modalEliminarAlimento">
+              <i class="bi bi-trash"></i>
+            </button>            
           </div>
         </div>
+      </div>
+    
+      <ng-template #sinAlimentos>
+        <p class="text-muted">Aún no has registrado alimentos.</p>
+      </ng-template>
+    </div>
+    
+  </div>
+</div>
+<div class="modal fade" id="modalAlimento" tabindex="-1" aria-labelledby="modalAlimentoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="modalAlimentoLabel">Registrar Alimento</h5>
+        <button type="button" id="CerrarModal" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="guardarAlimento()" #formAlimento="ngForm">
+          <div class="form-floating mb-3">
+            <input type="text" id="nombre" class="form-control" [(ngModel)]="alimento.nombre" name="nombre" required>
+            <label for="nombre">Nombre del alimento</label>
+          </div>
 
-        <div class="row">
-          <div class="col-md-4 mb-3">
-            <label for="grasas" class="form-label">Grasas (g)</label>
-            <input type="number" id="grasas" class="form-control" [(ngModel)]="alimento.grasas" name="grasas">
+          <div class="mb-3">
+            <label class="form-label">Unidad</label>
+            <select class="form-select" [(ngModel)]="alimento.unidad" name="unidad" required>
+              <option value="">Selecciona la Unidad</option>
+              <option value="g">Sólido (gramos)</option>
+              <option value="ml">Líquido (mililitros)</option>
+            </select>
           </div>
-          <div class="col-md-4 mb-3">
-            <label for="sodio" class="form-label">Sodio (mg)</label>
-            <input type="number" id="sodio" class="form-control" [(ngModel)]="alimento.sodio" name="sodio">
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="fibra" class="form-label">Fibra (g)</label>
-            <input type="number" id="fibra" class="form-control" [(ngModel)]="alimento.fibra" name="fibra">
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="azucares" class="form-label">Azúcares (g)</label>
-            <input type="number" id="azucares" class="form-control" [(ngModel)]="alimento.azucares" name="azucares">
-          </div>
-        </div>
 
-        <button type="submit" class="btn btn-dark w-100 mt-3">Guardar alimento</button>
-      </form>
+          <hr class="my-4">
+          <h6 class="text-muted">Por cada 100{{ alimento.unidad || '(?)' }} de alimento:</h6>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="calorias" class="form-label macro-calorias">Calorías</label>
+              <input type="number" id="calorias" class="form-control" [(ngModel)]="alimento.calorias" name="calorias">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="proteina" class="form-label macro-proteina">Proteína (g)</label>
+              <input type="number" id="proteina" class="form-control" [(ngModel)]="alimento.proteina" name="proteina">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="carbohidratos" class="form-label macro-carbohidratos">Carbohidratos (g)</label>
+              <input type="number" id="carbohidratos" class="form-control" [(ngModel)]="alimento.carbohidratos" name="carbohidratos">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="grasas" class="form-label macro-grasas">Grasas (g)</label>
+              <input type="number" id="grasas" class="form-control" [(ngModel)]="alimento.grasas" name="grasas">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="sodio" class="form-label macro-sodio">Sodio (mg)</label>
+              <input type="number" id="sodio" class="form-control" [(ngModel)]="alimento.sodio" name="sodio">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="fibra" class="form-label macro-fibra ">Fibra (g)</label>
+              <input type="number" id="fibra" class="form-control" [(ngModel)]="alimento.fibra" name="fibra">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="azucares" class="form-label macro-azucares ">Azúcares (g)</label>
+              <input type="number" id="azucares" class="form-control" [(ngModel)]="alimento.azucares" name="azucares">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-dark w-100 mt-3" data-bs-dismiss="modal" [disabled]="formAlimento.invalid">Guardar alimento</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- Modal Confirmación de Eliminación -->
+<div class="modal fade" id="modalEliminarAlimento" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalEliminarLabel">Eliminar Alimento</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que deseas eliminar <strong>{{ alimentoAEliminar?.nombre }}</strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarAlimento(alimentoAEliminar?.id ?? '')">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

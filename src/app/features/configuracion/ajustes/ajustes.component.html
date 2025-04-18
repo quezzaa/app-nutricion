@@ -1,7 +1,5 @@
 <div class="container mt-4 mb-5" style="padding-bottom: 80px;">
     <h4 class="text-center mb-4">Ajustes de Cuenta</h4>
-  
-    <!-- Información Personal -->
     <div class="card shadow-sm mb-3">
       <div class="card-header bg-dark text-white d-flex align-items-center">
         <i class="bi bi-person-fill me-2"></i>
@@ -31,8 +29,8 @@
         
           <div class="mb-3">
             <label class="form-label">Género</label>
-            <select class="form-select" [(ngModel)]="usuario.Genero">
-              <option *ngFor="let genero of Generos" [value]="genero.value">{{ genero.label }}</option>
+            <select class="form-select" [(ngModel)]="usuario.Sexo">
+              <option *ngFor="let genero of Sexos" [value]="genero.value">{{ genero.label }}</option>
             </select>
           </div>
           
@@ -45,8 +43,6 @@
       </div>
 
     </div>
-  
-    <!-- Objetivos -->
     <div class="card shadow-sm mb-3">
       <div class="card-header bg-dark text-white d-flex align-items-center">
         <i class="bi bi-bullseye me-2"></i>
@@ -65,6 +61,18 @@
             <label class="form-label">Meta de carbohidratos (g)</label>
             <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaCarbohidratos">
           </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Meta de sodio (mg)</label>
+            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaSodio">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Meta de fibra (g)</label>
+            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaFibra">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Meta de azucares (g)</label>
+            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaAzucares">
+          </div>
         <div class="col-md-6 mb-3">
           <label class="form-label">Meta de grasa (g)</label>
           <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaGrasas">
@@ -76,21 +84,6 @@
           
       </div>
     </div>
-  
-    <!-- Seguridad -->
-    <div class="card shadow-sm mb-3">
-      <div class="card-header bg-dark text-white d-flex align-items-center">
-        <i class="bi bi-shield-lock-fill me-2"></i>
-        Seguridad
-      </div>
-      <div class="card-body d-flex flex-column gap-2">
-        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal">
-          Eliminar cuenta
-        </button>
-      </div>
-    </div>
-  
-    <!-- Guardar cambios -->
     <div class="d-grid mt-4">
       <button class="btn btn-dark" (click)="guardarCambios()">
         <i class="bi bi-save-fill me-1"></i> Guardar Cambios
@@ -98,27 +91,4 @@
     </div>
   </div>
   
-<!-- Modal de Confirmación -->
-<div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content border-danger">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title" id="confirmarEliminarLabel">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>Eliminar Cuenta
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <p class="mb-2">¿Estás seguro que deseas eliminar tu cuenta?</p>
-          <p class="text-danger small">
-            Esta acción es <strong>permanente</strong> y no se puede deshacer. Todos tus datos serán eliminados.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger" (click)="eliminarCuenta()"  data-bs-dismiss="modal">Eliminar definitivamente</button>
-        </div>
-      </div>
-    </div>
-  </div>
   

@@ -1,10 +1,11 @@
 export interface Alimento {
+    id: string;
     nombre: string;
-    unidad: 'g' | 'ml'; // Distinción entre sólidos y líquidos
-    calorias: number;
-    proteina: number;
-    carbohidratos: number;
-    grasas: number;
+    unidad?: 'g' | 'ml';
+    calorias?: number;
+    proteina?: number;
+    carbohidratos?: number;
+    grasas?: number;
     sodio?: number;
     azucares?: number;
     fibra?: number;
