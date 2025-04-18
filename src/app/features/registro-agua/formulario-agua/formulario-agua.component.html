@@ -21,12 +21,12 @@
     </div>
 
     <hr class="my-3">
-    <div class="card shadow-sm">
+    <div class="card shadow-sm" *ngIf="historialHoy.length > 0; else sinRegistros">
     <div class="card-header bg-dark text-white">
       <h5>Historial de hoy:</h5>
     </div>
     <div class="card-body">
-      <div *ngIf="historialHoy.length > 0; else sinRegistros">
+      <div>
         <div *ngFor="let registro of historialHoy; let i = index" class="card mb-2">
           <div class="card-body d-flex justify-content-between align-items-center">
             <div>
@@ -42,12 +42,13 @@
           </div>
         </div>
       </div>
-    
-      <ng-template #sinRegistros>
-        <p class="text-muted">Aún no has registrado agua para hoy.</p>
-      </ng-template>
     </div>
     </div>
+    <ng-template #sinRegistros>
+      <div class="alert alert-secondary text-center">
+        Aún no has registrado agua para hoy.
+      </div>
+    </ng-template>
     
 
   </div>
