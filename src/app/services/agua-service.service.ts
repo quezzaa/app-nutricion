@@ -1,63 +1,91 @@
 import { Injectable } from '@angular/core';
-import { Preferences } from '@capacitor/preferences';
+import { SqliteService } from './sql-lite-service.service';
 import { Agua } from '../Models/agua.model';
 
-const CLAVE_AGUA = 'registro_agua';
 @Injectable({
   providedIn: 'root'
 })
 export class AguaServiceService {
 
-  constructor() { }
+  constructor(private sqliteService: SqliteService) {}
 
   async guardarAgua(nuevaEntrada: Agua): Promise<void> {
-    const lista = await this.obtenerAgua();
-    lista.push(nuevaEntrada);
-    await Preferences.set({
-      key: CLAVE_AGUA,
-      value: JSON.stringify(lista)
-    });
+    const db = await this.sqliteService.getDb();
+    if (db) {
+      const query = `
+        INSERT INTO tbAgua (cantidad, fecha, idUsuario)
+        VALUES (?, ?, ?)
+      `;
+      await db.run(query, [nuevaEntrada.cantidad, nuevaEntrada.fecha, nuevaEntrada.idUsuario]);
+    }
   }
 
-  async eliminarAguaPorId(id: string): Promise<void> {
-    const lista = await this.obtenerAgua();
-    const nuevaLista = lista.filter(a => a.id !== id);
-    await Preferences.set({
-      key: CLAVE_AGUA,
-      value: JSON.stringify(nuevaLista)
-    });
+  async eliminarAguaPorId(idAgua: number): Promise<void> {
+    const db = await this.sqliteService.getDb();
+    if (db) {
+      const query = 'DELETE FROM tbAgua WHERE idAgua = ?';
+      await db.run(query, [idAgua]);
+    }
   }
 
-  async obtenerAgua(): Promise<Agua[]> {
-    const { value } = await Preferences.get({ key: CLAVE_AGUA });
-    return value ? JSON.parse(value) : [];
-  }
-
-  async obtenerSoloDeHoy(): Promise<Agua[]> {
+  async obtenerSoloDeHoy(idUsuario:number): Promise<Agua[]> {
     const hoy = new Date();
     const hoyLocal = hoy.toLocaleDateString('en-CA');
-    const lista = await this.obtenerAgua();
-    return lista.filter(a => new Date(a.Fecha).toLocaleDateString('en-CA') === hoyLocal);
+    const db = await this.sqliteService.getDb();
+    if (db) {
+      const query = 'SELECT * FROM tbAgua WHERE fecha LIKE ? and idUsuario = ?';
+      const result = await db.query(query, [`${hoyLocal}%`, idUsuario]);
+      return result.values as Agua[];
+    }
+    return [];
   }
 
-  async obtenerAguaDeLaSemana(): Promise<Agua[]> {
-    const ahora = new Date();
-    const primerDiaSemana = new Date(ahora);
-    primerDiaSemana.setDate(ahora.getDate() - ahora.getDay());
-    const lista = await this.obtenerAgua();
-    return lista.filter(a => {
-      const fecha = new Date(a.Fecha);
-      return fecha >= primerDiaSemana && fecha <= ahora;
-    });
-  }
+// Obtener el agua registrada en la semana (últimos 7 días)
+async obtenerAguaDeLaSemana(idUsuario: number): Promise<any[]> {
+  const db = await this.sqliteService.getDb();
+  const fechaHoy = new Date();
+  const fechaHace7Dias = new Date();
+  fechaHace7Dias.setDate(fechaHoy.getDate() - 7);
+  const fechaInicioSemana = fechaHace7Dias.toISOString().slice(0, 10);
 
-  async obtenerAguaDelMes(): Promise<Agua[]> {
-    const ahora = new Date();
-    const primerDiaMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
-    const lista = await this.obtenerAgua();
-    return lista.filter(a => {
-      const fecha = new Date(a.Fecha);
-      return fecha >= primerDiaMes && fecha <= ahora;
-    });
-  }
+  const query = `
+    SELECT 
+      fecha, 
+      SUM(cantidad) AS cantidad
+    FROM tbAgua
+    WHERE date(fecha) >= '${fechaInicioSemana}' 
+    AND idUsuario = ${idUsuario}
+    GROUP BY fecha
+  `;
+
+  const result = await db?.query(query);
+  return result?.values || [];
+}
+
+  
+  
+// Obtener el agua registrada en el mes (últimos 30 días)
+async obtenerAguaDelMes(idUsuario: number): Promise<any[]> {
+  const db = await this.sqliteService.getDb();
+  const fechaHoy = new Date();
+  const fechaHace30Dias = new Date();
+  fechaHace30Dias.setDate(fechaHoy.getDate() - 30);
+  const fechaInicioMes = fechaHace30Dias.toISOString().slice(0, 10);
+
+  const query = `
+    SELECT 
+      fecha, 
+      SUM(cantidad) AS cantidad
+    FROM tbAgua
+    WHERE date(fecha) >= '${fechaInicioMes}' 
+    AND idUsuario = ${idUsuario}
+    GROUP BY fecha
+  `;
+
+  const result = await db?.query(query);
+  return result?.values || [];
+}
+
+  
+
 }

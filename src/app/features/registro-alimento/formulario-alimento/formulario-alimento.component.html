@@ -64,15 +64,15 @@
 
           <div class="mb-3">
             <label class="form-label">Unidad</label>
-            <select class="form-select" [(ngModel)]="alimento.unidad" name="unidad" required>
+            <select class="form-select" [(ngModel)]="alimento.idUnidad" name="unidad" required>
               <option value="">Selecciona la Unidad</option>
-              <option value="g">Sólido (gramos)</option>
-              <option value="ml">Líquido (mililitros)</option>
+              <option value="1">Sólido (gramos)</option>
+              <option value="2">Líquido (mililitros)</option>
             </select>
           </div>
 
           <hr class="my-4">
-          <h6 class="text-muted">Por cada 100{{ alimento.unidad || '(?)' }} de alimento:</h6>
+          <h6 class="text-muted">Por cada 100{{ alimento.idUnidad || '(?)' }} de alimento:</h6>
 
           <div class="row">
             <div class="col-md-4 mb-3">
@@ -128,7 +128,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarAlimento(alimentoAEliminar?.id ?? '')">Eliminar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarAlimento(alimentoAEliminar?.idAlimento ?? 0,idUsuario)">Eliminar</button>
       </div>
     </div>
   </div>

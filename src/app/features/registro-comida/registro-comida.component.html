@@ -1,157 +1,150 @@
 <div class="container mt-4" style="padding-bottom: 90px;">
-    <h5 class="text-center mb-3">Registrar Comida del Día</h5>
-    <div class="card shadow-sm mb-3">
-      <div class="card-body row g-2">
-        <div class="col-md-6">
-          <label class="form-label">Alimento</label>
-          <div class="row g-2 align-items-center">
-            <!-- Input buscador -->
-            <div class="col-md-6">
-              <input type="text" class="form-control" placeholder="Buscar alimento..."
-                     [(ngModel)]="busquedaAlimento">
-            </div>
-            <!-- Select alimentos -->
-            <div class="col-md-6">
-              <select class="form-select" [(ngModel)]="alimentoSeleccionado">
-                <option value="" selected>Busca el alimento</option>
-                <option *ngFor="let a of alimentosFiltradosSelect" [ngValue]="a">
-                  {{ a.nombre }}
-                </option>
-              </select>
-            </div>
+  <h5 class="text-center mb-3">Registrar Comida del Día</h5>
+
+  <!-- Formulario para agregar alimentos -->
+  <div class="card shadow-sm mb-3">
+    <div class="card-body row g-2">
+      <div class="col-md-6">
+        <label class="form-label">Alimento</label>
+        <div class="row g-2 align-items-center">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Buscar alimento..." [(ngModel)]="busquedaAlimento">
           </div>
-          
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">
-            Cantidad 
-            <span *ngIf="alimentoSeleccionado?.unidad === 'ml'">(ml)</span>
-            <span *ngIf="alimentoSeleccionado?.unidad === 'g' || !alimentoSeleccionado?.unidad">(g)</span>
-          </label>
-          <input type="number" class="form-control" [(ngModel)]="cantidad" min="1">
-        </div>
-        <div class="col-md-2 d-flex align-items-end">
-          <button class="btn btn-dark w-100" (click)="agregarAlimento()">
-            <i class="bi bi-plus-lg"></i>
-          </button>
+          <div class="col-md-6">
+            <select class="form-select" [(ngModel)]="alimentoSeleccionado">
+              <option value="" selected>Busca el alimento</option>
+              <option *ngFor="let a of alimentosFiltradosSelect" [ngValue]="a">{{ a.nombre }}</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
-  
-    <div *ngIf="alimentosAgregados.length > 0" class="card shadow-sm">
-      <div class="card-header bg-dark text-white">Comida actual</div>
-      <div class="card-body">
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let a of alimentosAgregados; let i = index">
-            <div>
-              <p class="card-text mb-0">
-                {{ a.cantidad }}{{ a.unidad }} de {{ a.nombre }} — 
-                <span class="macro-calorias">{{ a.calorias }} kcal</span>, 
-                <span class="macro-proteina">{{ a.proteina }}g proteína</span>,
-                <span class="macro-carbohidratos">{{ a.carbohidratos }}g carb</span>, 
-                <span class="macro-grasas">{{ a.grasas }}g grasa</span>, 
-                <span class="macro-sodio">{{ a.sodio }}mg sodio</span>,
-                <span class="macro-fibra">{{ a.fibra }}g fibra</span>, 
-                <span class="macro-azucares">{{ a.azucares }}g azúcares</span>
-              </p>
-            </div>
-            <button class="btn btn-sm btn-outline-danger" (click)="eliminarAlimento(i)">
-              <i class="bi bi-trash"></i>
-            </button>
-          </li>
-        </ul>
-        
-        <div class="border-top pt-3">
-          <p><strong>Totales:</strong></p>
-          <p>
-            <span class="macro-proteina">Proteína:{{ totales.proteina | number:'1.2-2' }}g</span> |
-            <span class="macro-carbohidratos">Carbohidratos: {{ totales.carbohidratos | number:'1.2-2' }}g</span> |
-            <span class="macro-grasas">Grasas:{{ totales.grasas | number:'1.2-2' }}g</span>  |
-            <span class="macro-calorias">Calorías:{{ totales.calorias | number:'1.2-2' }} kcal</span> |
-            <span class="macro-sodio">Sodio:{{ totales.sodio | number:'1.2-2' }}mg</span>  |
-            <span class="macro-azucares">Azúcares:{{ totales.azucares | number:'1.2-2' }}g</span> |
-            <span class="macro-fibra">Fibra:{{ totales.fibra | number:'1.2-2' }}g</span> 
-          </p>
-        </div>
-  
-        <button class="btn btn-dark w-100 mt-3" (click)="guardarComida()">
-          <i class="bi bi-check-circle-fill me-1"></i> Guardar Comida
+
+      <div class="col-md-4">
+        <label class="form-label">
+          Cantidad 
+          <span *ngIf="alimentoSeleccionado?.idUnidad === 2">(ml)</span>
+          <span *ngIf="alimentoSeleccionado?.idUnidad === 1">(g)</span>
+          <span *ngIf="alimentoSeleccionado?.idUnidad != 1 && alimentoSeleccionado?.idUnidad != 2">(?)</span>
+        </label>
+        <input type="number" class="form-control" [(ngModel)]="cantidad" min="1">
+      </div>
+
+      <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-dark w-100" (click)="agregarAlimento()">
+          <i class="bi bi-plus-lg"></i>
         </button>
       </div>
     </div>
+  </div>
 
-      <div *ngIf="ComidaDelDia.length > 0; else noComidas" class="card shadow-sm">
-        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-          <h5 class="text-center mb-3">Comidas del Día</h5></div>
-          <div *ngFor="let comida of ComidaDelDia" class="card shadow-sm mb-3">
-            <div class="card-header bg-secondary text-white m-1">
-              <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Registro Comida</h5>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <ul class="list-group mb-3 col-md-11">
-                  <li class="list-group-item" *ngFor="let a of comida.alimentos">
-                    {{ a.cantidad }}{{ a.unidad }} de {{ a.nombre }} —
-                    <span class="macro-calorias">{{ a.caloriasTotales }} kcal</span>,
-                    <span class="macro-proteina">{{ a.proteinaTotal }}g proteína</span>,
-                    <span class="macro-carbohidratos">{{ a.carbohidratosTotales }}g carb</span>,
-                    <span class="macro-grasas">{{ a.grasasTotales }}g grasa</span>,
-                    <span class="macro-sodio">{{ a.sodioTotal }}mg sodio</span>,
-                    <span class="macro-fibra">{{ a.fibraTotal }}g fibra</span>,
-                    <span class="macro-azucares">{{ a.azucaresTotal }}g azúcares</span>
-                  </li>
-                </ul>
-                <div class="d-flex align-items-center col-md-1">
-                  <span class="me-3">{{ comida.fecha | date:'shortTime' }}</span>
-                  <button class="btn btn-sm btn-outline-danger" (click)="seleccionarComida(comida)" data-bs-toggle="modal" data-bs-target="#modalConfirmarEliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="border-top pt-2">
-                <p class="mb-0"><strong>Totales:</strong></p>
-                <p>
-                  <span class="macro-proteina">Proteína: {{ comida.totales.proteina | number:'1.2-2' }}g</span> |
-                  <span class="macro-carbohidratos">Carbohidratos: {{ comida.totales.carbohidratos | number:'1.2-2' }}g</span> |
-                  <span class="macro-grasas">Grasas: {{ comida.totales.grasas | number:'1.2-2' }}g</span> |
-                  <span class="macro-calorias">Calorías: {{ comida.totales.calorias | number:'1.2-2' }} kcal</span> |
-                  <span class="macro-sodio">Sodio: {{ comida.totales.sodio | number:'1.2-2' }}mg</span> |
-                  <span class="macro-azucares">Azúcares: {{ comida.totales.azucares | number:'1.2-2' }}g</span> |
-                  <span class="macro-fibra">Fibra: {{ comida.totales.fibra | number:'1.2-2' }}g</span>
-                </p>
-              </div>
-            </div>
+  <!-- Vista previa de alimentos agregados -->
+  <div *ngIf="alimentosAgregados.length > 0" class="card shadow-sm">
+    <div class="card-header bg-dark text-white">Comida actual</div>
+    <div class="card-body">
+      <ul class="list-group mb-3">
+        <li *ngFor="let a of alimentosAgregados; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <p class="mb-0">
+              {{ a.cantidad }}{{ a.unidad }} de {{ a.nombre }} — 
+              <span class="macro-calorias">{{ a.calorias }} kcal</span>, 
+              <span class="macro-proteina">{{ a.proteina }}g proteína</span>,
+              <span class="macro-carbohidratos">{{ a.carbohidratos }}g carb</span>, 
+              <span class="macro-grasas">{{ a.grasas }}g grasa</span>, 
+              <span class="macro-sodio">{{ a.sodio }}mg sodio</span>,
+              <span class="macro-fibra">{{ a.fibra }}g fibra</span>, 
+              <span class="macro-azucares">{{ a.azucares }}g azúcares</span>
+            </p>
           </div>
-          
-          
+          <button class="btn btn-sm btn-outline-danger" (click)="eliminarAlimento(i)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </li>
+      </ul>
+
+      <!-- Totales actuales -->
+      <div class="border-top pt-3">
+        <p><strong>Totales:</strong></p>
+        <p>
+          <span class="macro-proteina">Proteína: {{ totales.proteina | number:'1.2-2' }}g</span> |
+          <span class="macro-carbohidratos">Carbohidratos: {{ totales.carbohidratos | number:'1.2-2' }}g</span> |
+          <span class="macro-grasas">Grasas: {{ totales.grasas | number:'1.2-2' }}g</span> |
+          <span class="macro-calorias">Calorías: {{ totales.calorias | number:'1.2-2' }} kcal</span> |
+          <span class="macro-sodio">Sodio: {{ totales.sodio | number:'1.2-2' }}mg</span> |
+          <span class="macro-azucares">Azúcares: {{ totales.azucares | number:'1.2-2' }}g</span> |
+          <span class="macro-fibra">Fibra: {{ totales.fibra | number:'1.2-2' }}g</span> 
+        </p>
       </div>
-    
-      <ng-template #noComidas>
-        <div class="alert alert-secondary text-center">
-          No hay comidas registradas para hoy.
-        </div>
-      </ng-template>
-    </div>    
 
-      <!-- Modal de confirmación -->
-      <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-labelledby="modalConfirmarEliminarLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-              <h5 class="modal-title" id="modalConfirmarEliminarLabel">¿Eliminar comida?</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-              ¿Estás seguro que deseas eliminar esta comida registrada el {{ComidaSeleccionada?.fecha}} ? Esta acción no se puede deshacer.
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-danger" (click)="eliminarComida(ComidaSeleccionada?.id ?? '')">Eliminar</button>
-            </div>
-          </div>
+      <button class="btn btn-dark w-100 mt-3" (click)="guardarComida()">
+        <i class="bi bi-check-circle-fill me-1"></i> Guardar Comida
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de comidas guardadas en la base de datos -->
+  <div *ngIf="ComidaDelDia.length > 0; else noComidas" class="mt-4">
+    <div *ngFor="let comida of ComidaDelDia" class="card shadow-sm mb-3">
+      <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+        <strong>Registro de Comida</strong>
+        <div>
+          <small>{{ comida.fecha | date:'short' }}</small>
+          <button class="btn btn-sm btn-outline-danger ms-2" (click)="seleccionarComida(comida)" data-bs-toggle="modal" data-bs-target="#modalConfirmarEliminar">
+            <i class="bi bi-trash"></i>
+          </button>
         </div>
       </div>
-  
-  
+
+      <div class="card-body">
+        <ul class="list-group mb-3">
+          <li class="list-group-item" *ngFor="let a of comida.alimentos">
+            {{ a.cantidad }}{{ a.idUnidad}} de {{ a.nombre }} —
+            <span class="macro-calorias">{{ a.caloriasTotales }} kcal</span>,
+            <span class="macro-proteina">{{ a.proteinaTotal }}g proteína</span>,
+            <span class="macro-carbohidratos">{{ a.carbohidratosTotales }}g carb</span>,
+            <span class="macro-grasas">{{ a.grasasTotal }}g grasa</span>,
+            <span class="macro-sodio">{{ a.sodioTotal }}mg sodio</span>,
+            <span class="macro-fibra">{{ a.fibraTotal }}g fibra</span>,
+            <span class="macro-azucares">{{ a.azucaresTotal }}g azúcares</span>
+          </li>
+        </ul>
+
+        <div class="border-top pt-2">
+          <p class="mb-0"><strong>Totales:</strong></p>
+          <p>
+            <span class="macro-proteina">Proteína: {{ comida.totales?.proteina | number:'1.2-2' }}g</span> |
+            <span class="macro-carbohidratos">Carbohidratos: {{ comida.totales?.carbohidratos | number:'1.2-2' }}g</span> |
+            <span class="macro-grasas">Grasas: {{ comida.totales?.grasas | number:'1.2-2' }}g</span> |
+            <span class="macro-calorias">Calorías: {{ comida.totales?.calorias | number:'1.2-2' }} kcal</span> |
+            <span class="macro-sodio">Sodio: {{ comida.totales?.sodio | number:'1.2-2' }}mg</span> |
+            <span class="macro-azucares">Azúcares: {{ comida.totales?.azucares | number:'1.2-2' }}g</span> |
+            <span class="macro-fibra">Fibra: {{ comida.totales?.fibra | number:'1.2-2' }}g</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noComidas>
+    <div class="alert alert-secondary text-center">No hay comidas registradas para hoy.</div>
+  </ng-template>
+</div>
+
+<!-- Modal de confirmación de eliminación -->
+<div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-labelledby="modalConfirmarEliminarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalConfirmarEliminarLabel">¿Eliminar comida?</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que deseas eliminar esta comida registrada el {{ ComidaSeleccionada?.fecha }}? Esta acción no se puede deshacer.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="eliminarComida(ComidaSeleccionada?.idComida ?? 0)">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,19 +1,19 @@
 export interface Usuario {
-    Nombre: string;
-    Apellidos: string;
-    Correo: string;
-    FechaNacimiento: Date;
-    Sexo: 'Masculino' | 'Femenino';
-    Altura: number;
-    Peso: number;
-    ActividadFisica: 'Baja' | 'Media' | 'Alta';
-    MetaCalorias: number;
-    MetaProteinas: number;
-    MetaCarbohidratos: number;
-    MetaFibra: number;
-    MetaAzucares: number;
-    MetaSodio: number;
-    MetaGrasas: number;
-    MetaAgua: number;
-  }
-  
+  idUsuario: number;
+  idGenero: number;
+  idActividad: number;
+  nombre: string;
+  correo: string;
+  fechaNacimiento: string;
+  altura: number;
+  peso: number;
+  metaCalorias: number;
+  metaProteinas: number;
+  metaCarbohidratos: number;
+  metaFibra: number;
+  metaAzucares: number;
+  metaSodio: number;
+  metaGrasas: number;
+  metaAgua: number;
+  pass?: string;
+}

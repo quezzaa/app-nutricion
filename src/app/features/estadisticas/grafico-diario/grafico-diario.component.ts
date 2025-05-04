@@ -56,7 +56,9 @@ export class GraficoDiarioComponent implements OnInit {
     private toast: ToastrService
   ) {}
 
+  idUsuario:any
   ngOnInit(): void {
+    this.idUsuario = sessionStorage.getItem('userId');
     this.calcularEstadisticas();
   }
 
@@ -74,88 +76,100 @@ export class GraficoDiarioComponent implements OnInit {
   }
 
   async calcularEstadisticas(): Promise<void> {
-    const comidasSemana = await this.CService.obtenerComidasDeLaSemana();
-    const comidasMes = await this.CService.obtenerComidasDelMes();
-    const aguaSemana = await this.AService.obtenerAguaDeLaSemana();
-    const aguaMes = await this.AService.obtenerAguaDelMes();
-
-    let semanaLabels: string[] = [];
-    let semanaData: any[] = [];
-    for (let i = 0; i < 7; i++) {
-      let totalDia = this.resetResumen();
-      const comidasDia = comidasSemana.filter((comida) => this.esMismoDiaSemana(comida.fecha, i));
-      const aguaDia = aguaSemana.filter((agua) => this.esMismoDiaSemana(agua.Fecha, i));
-      comidasDia.forEach((comida) => {
-        totalDia.calorias += comida.totales.calorias;
-        totalDia.proteina += comida.totales.proteina;
-        totalDia.carbohidratos += comida.totales.carbohidratos;
-        totalDia.grasas += comida.totales.grasas;
-        totalDia.fibra += comida.totales.fibra;
-        totalDia.azucares += comida.totales.azucares;
-        totalDia.sodio += comida.totales.sodio;
-      });
-      aguaDia.forEach((entrada) => {
-        totalDia.agua += entrada.cantidad;
-      });
-      semanaLabels.push(`Día ${i + 1}`);
-      semanaData.push(totalDia);
+    try {
+      const comidasSemana = await this.CService.obtenerComidasDeLaSemana(parseInt(this.idUsuario));
+      const comidasMes = await this.CService.obtenerComidasDelMes(parseInt(this.idUsuario));
+      const aguaSemana = await this.AService.obtenerAguaDeLaSemana(parseInt(this.idUsuario));
+      const aguaMes = await this.AService.obtenerAguaDelMes(parseInt(this.idUsuario));
+  
+      let semanaLabels: string[] = [];
+      let semanaData: any[] = [];
+      
+      for (let i = 0; i < 7; i++) {
+        let totalDia = this.resetResumen();
+        const comidasDia = comidasSemana.filter((comida) => this.esMismoDiaSemana(comida.fecha, i));
+        const aguaDia = aguaSemana.filter((agua) => this.esMismoDiaSemana(agua.fecha, i));
+  
+        comidasDia.forEach((comida) => {
+            totalDia.calorias += comida.calorias || 0;
+            totalDia.proteina += comida.proteina || 0;
+            totalDia.carbohidratos += comida.carbohidratos || 0;
+            totalDia.grasas += comida.grasas || 0;
+            totalDia.fibra += comida.fibra || 0;
+            totalDia.azucares += comida.azucares || 0;
+            totalDia.sodio += comida.sodio || 0;
+        });
+  
+        aguaDia.forEach((entrada) => {
+          totalDia.agua += entrada.cantidad || 0;
+        });
+  
+        semanaLabels.push(`Día ${i + 1}`);
+        semanaData.push(totalDia);
+      }
+  
+      let mesLabels: string[] = [];
+      let mesData: any[] = [];
+  
+      for (let i = 1; i <= 30; i++) {
+        let totalDia = this.resetResumen();
+        const comidasDia = comidasMes.filter((comida) => this.esMismoDiaMes(comida.fecha, i));
+        const aguaDia = aguaMes.filter((agua) => this.esMismoDiaMes(agua.fecha, i));
+  
+        comidasDia.forEach((comida) => {
+            totalDia.calorias += comida.calorias || 0;
+            totalDia.proteina += comida.proteina || 0;
+            totalDia.carbohidratos += comida.carbohidratos || 0;
+            totalDia.grasas += comida.grasas || 0;
+            totalDia.fibra += comida.fibra || 0;
+            totalDia.azucares += comida.azucares || 0;
+            totalDia.sodio += comida.sodio || 0;
+        });
+  
+        aguaDia.forEach((entrada) => {
+          totalDia.agua += entrada.cantidad || 0;
+        });
+  
+        mesLabels.push(`Día ${i}`);
+        mesData.push(totalDia);
+      }
+  
+      this.barChartLabelsSemana = semanaLabels;
+      this.barChartLabelsMes = mesLabels;
+  
+      this.barChartDataSemana = {
+        labels: semanaLabels,
+        datasets: [
+          { data: semanaData.map(d => d.calorias), label: 'Calorías', backgroundColor: '#e74c3c' },
+          { data: semanaData.map(d => d.proteina), label: 'Proteína', backgroundColor: '#27ae60' },
+          { data: semanaData.map(d => d.carbohidratos), label: 'Carbohidratos', backgroundColor: '#dd9117' },
+          { data: semanaData.map(d => d.grasas), label: 'Grasas', backgroundColor: '#f1c40f' },
+          { data: semanaData.map(d => d.fibra), label: 'Fibra', backgroundColor: '#907122' },
+          { data: semanaData.map(d => d.azucares), label: 'Azúcares', backgroundColor: '#a73185' },
+          { data: semanaData.map(d => d.sodio), label: 'Sodio', backgroundColor: '#299680' },
+          { data: semanaData.map(d => d.agua), label: 'Agua (ml)', backgroundColor: '#1749d2' },
+        ]
+      };
+  
+      this.barChartDataMes = {
+        labels: mesLabels,
+        datasets: [
+          { data: mesData.map(d => d.calorias), label: 'Calorías', backgroundColor: '#e74c3c' },
+          { data: mesData.map(d => d.proteina), label: 'Proteína', backgroundColor: '#27ae60' },
+          { data: mesData.map(d => d.carbohidratos), label: 'Carbohidratos', backgroundColor: '#dd9117' },
+          { data: mesData.map(d => d.grasas), label: 'Grasas', backgroundColor: '#f1c40f' },
+          { data: mesData.map(d => d.fibra), label: 'Fibra', backgroundColor: '#907122' },
+          { data: mesData.map(d => d.azucares), label: 'Azúcares', backgroundColor: '#a73185' },
+          { data: mesData.map(d => d.sodio), label: 'Sodio', backgroundColor: '#299680' },
+          { data: mesData.map(d => d.agua), label: 'Agua (ml)', backgroundColor: '#1749d2' },
+        ]
+      };
+    } catch (error) {
+      console.error('Error al calcular estadísticas:', error);
+      this.toast.error('Ocurrió un error al cargar las estadísticas');
     }
-
-    let mesLabels: string[] = [];
-    let mesData: any[] = [];
-    for (let i = 1; i <= 30; i++) {
-      let totalDia = this.resetResumen();
-      const comidasDia = comidasMes.filter((comida) => this.esMismoDiaMes(comida.fecha, i));
-      const aguaDia = aguaMes.filter((agua) => this.esMismoDiaMes(agua.Fecha, i));
-
-      comidasDia.forEach((comida) => {
-        totalDia.calorias += comida.totales.calorias;
-        totalDia.proteina += comida.totales.proteina;
-        totalDia.carbohidratos += comida.totales.carbohidratos;
-        totalDia.grasas += comida.totales.grasas;
-        totalDia.fibra += comida.totales.fibra;
-        totalDia.azucares += comida.totales.azucares;
-        totalDia.sodio += comida.totales.sodio;
-      });
-
-      aguaDia.forEach((entrada) => {
-        totalDia.agua += entrada.cantidad;
-      });
-      mesLabels.push(`Día ${i}`);
-      mesData.push(totalDia);
-    }
-
-    this.barChartLabelsSemana = semanaLabels;
-    this.barChartLabelsMes = mesLabels;
-
-    this.barChartDataSemana = {
-      labels: semanaLabels,
-      datasets: [
-        { data: semanaData.map(d => d.calorias), label: 'Calorías', backgroundColor: '#e74c3c' },
-        { data: semanaData.map(d => d.proteina), label: 'Proteína', backgroundColor: '#27ae60' },
-        { data: semanaData.map(d => d.carbohidratos), label: 'Carbohidratos', backgroundColor: '#dd9117' },
-        { data: semanaData.map(d => d.grasas), label: 'Grasas', backgroundColor: '#f1c40f' },
-        { data: semanaData.map(d => d.fibra), label: 'Fibra', backgroundColor: '#907122' },
-        { data: semanaData.map(d => d.azucares), label: 'Azúcares', backgroundColor: '#a73185' },
-        { data: semanaData.map(d => d.sodio), label: 'Sodio', backgroundColor: '#299680' },
-        { data: semanaData.map(d => d.agua), label: 'Agua (ml)', backgroundColor: '#1749d2' },
-      ]
-    };
-
-    this.barChartDataMes = {
-      labels: mesLabels,
-      datasets: [
-        { data: mesData.map(d => d.calorias), label: 'Calorías', backgroundColor: '#e74c3c' },
-        { data: mesData.map(d => d.proteina), label: 'Proteína', backgroundColor: '#27ae60' },
-        { data: mesData.map(d => d.carbohidratos), label: 'Carbohidratos', backgroundColor: '#dd9117' },
-        { data: mesData.map(d => d.grasas), label: 'Grasas', backgroundColor: '#f1c40f' },
-        { data: mesData.map(d => d.fibra), label: 'Fibra', backgroundColor: '#907122' },
-        { data: mesData.map(d => d.azucares), label: 'Azúcares', backgroundColor: '#a73185' },
-        { data: mesData.map(d => d.sodio), label: 'Sodio', backgroundColor: '#299680' },
-        { data: mesData.map(d => d.agua), label: 'Agua (ml)', backgroundColor: '#1749d2' },
-      ]
-    };
   }
+  
 
   esMismoDiaSemana(fecha: string, diaSemana: number): boolean {
     const fechaObjeto = new Date(fecha);

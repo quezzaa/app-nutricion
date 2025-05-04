@@ -1,5 +1,6 @@
 export interface Agua {
-    id: string;
-    cantidad: number;
-    Fecha: string;
-  }
+  idAgua: number;
+  cantidad: number;
+  fecha: string;
+  idUsuario: number;
+}

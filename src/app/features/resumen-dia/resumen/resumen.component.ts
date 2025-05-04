@@ -5,6 +5,7 @@ import { AjustesPerfilServiceService } from '../../../services/ajustes-perfil-se
 import { AguaServiceService } from '../../../services/agua-service.service';
 import { RegistroComida } from '../../../Models/comida.model';
 import { Agua } from '../../../Models/agua.model';
+import { Usuario } from '../../../Models/usuario.models';
 @Component({
     selector: 'app-resumen',
     standalone: true,
@@ -15,8 +16,26 @@ import { Agua } from '../../../Models/agua.model';
 export class ResumenComponent implements OnInit {
   constructor(private AService:AjustesPerfilServiceService,private CService:ComidaServiceService,
     private AgService:AguaServiceService, private cd:ChangeDetectorRef){}
-
+  idUsuario: any;
   metas:any
+  usuario: Usuario = {
+    idUsuario: 0,
+    idGenero: 1,
+    idActividad: 1,
+    nombre: '',
+    correo: '',
+    fechaNacimiento: '',
+    altura: 0,
+    peso: 0,
+    metaCalorias: 0,
+    metaProteinas: 0,
+    metaCarbohidratos: 0,
+    metaFibra: 0,
+    metaAzucares: 0,
+    metaSodio: 0,
+    metaGrasas: 0,
+    metaAgua: 0
+  };
   resumen: any = { // Inicializamos resumen como un objeto vacío
     calorias: 0,
     proteina: 0,
@@ -30,18 +49,20 @@ export class ResumenComponent implements OnInit {
   porcentajes: any = {};
 
   ngOnInit(): void {
+    this.idUsuario = sessionStorage.getItem('userId');
     this.cargarMetas();
     this.cargarDatosDelDia();
   }
   
-  cargarMetas() {
-    this.metas = this.AService.obtener();
+  async cargarMetas() {
+    const datos = await this.AService.obtenerUsuarioDesdeDB(parseInt(this.idUsuario));
+    if (datos) this.usuario = datos;
   }
   
   cargarDatosDelDia() {
     const fecha = this.obtenerFechaActual();
-    const comidasDelDia = this.CService.obtenerComidasDelDia(fecha);
-    const aguaRegistrada = this.AgService.obtenerSoloDeHoy();
+    const comidasDelDia = this.CService.obtenerComidasDelDia(fecha, parseInt(this.idUsuario));
+    const aguaRegistrada = this.AgService.obtenerSoloDeHoy(parseInt(this.idUsuario));
   
     Promise.all([comidasDelDia, aguaRegistrada]).then(([comidas, agua]) => {
       this.resumen = this.calcularTotalesDelDia(comidas, agua);
@@ -65,13 +86,13 @@ export class ResumenComponent implements OnInit {
     };
   
     for (const comida of comidas) {
-      totales.calorias += comida.totales.calorias;
-      totales.proteina += comida.totales.proteina;
-      totales.carbohidratos += comida.totales.carbohidratos;
-      totales.grasas += comida.totales.grasas;
-      totales.sodio += comida.totales.sodio;
-      totales.azucares += comida.totales.azucares;
-      totales.fibra += comida.totales.fibra;
+      totales.calorias += comida?.totales?.calorias || 0;
+      totales.proteina += comida?.totales?.proteina || 0;
+      totales.carbohidratos += comida.totales?.carbohidratos || 0;
+      totales.grasas += comida.totales?.grasas || 0;
+      totales.sodio += comida.totales?.sodio || 0;
+      totales.azucares += comida.totales?.azucares || 0;
+      totales.fibra += comida.totales?.fibra || 0;
     }
   
     totales.agua = agua.reduce((sum, r) => sum + r.cantidad, 0);
@@ -80,14 +101,14 @@ export class ResumenComponent implements OnInit {
 
   calcularPorcentajes() {
     this.porcentajes = {
-      calorias: this.porcentaje(this.resumen.calorias, this.metas.MetaCalorias),
-      proteina: this.porcentaje(this.resumen.proteina, this.metas.MetaProteinas),
-      carbohidratos: this.porcentaje(this.resumen.carbohidratos, this.metas.MetaCarbohidratos),
-      grasas: this.porcentaje(this.resumen.grasas, this.metas.MetaGrasas),
-      fibra: this.porcentaje(this.resumen.fibra, this.metas.MetaFibra),
-      azucares: this.porcentaje(this.resumen.azucares, this.metas.MetaAzucares),
-      sodio: this.porcentaje(this.resumen.sodio, this.metas.MetaSodio),
-      agua: this.porcentaje(this.resumen.agua, this.metas.MetaAgua),
+      calorias: this.porcentaje(this.resumen.calorias, this.usuario.metaCalorias),
+      proteina: this.porcentaje(this.resumen.proteina, this.usuario.metaProteinas),
+      carbohidratos: this.porcentaje(this.resumen.carbohidratos, this.usuario.metaCarbohidratos),
+      grasas: this.porcentaje(this.resumen.grasas, this.usuario.metaGrasas),
+      fibra: this.porcentaje(this.resumen.fibra, this.usuario.metaFibra),
+      azucares: this.porcentaje(this.resumen.azucares, this.usuario.metaAzucares),
+      sodio: this.porcentaje(this.resumen.sodio, this.usuario.metaSodio),
+      agua: this.porcentaje(this.resumen.agua, this.usuario.metaAgua),
     };
   }
 

@@ -12,7 +12,7 @@
   
           <div class="mb-3">
             <label for="hora" class="form-label">Hora de consumo</label>
-            <input type="time" id="hora" class="form-control" [(ngModel)]="agua.Fecha" name="hora" required>
+            <input type="time" id="hora" class="form-control" [(ngModel)]="agua.fecha" name="hora" required>
           </div>
   
           <button type="submit" class="btn btn-dark w-100 mt-3">Registrar insumo</button>
@@ -33,7 +33,7 @@
               <h6 class="card-title mb-1">Consumo Agua</h6>
               <p class="card-text mb-0">
                 <span class="macro-agua">{{ registro.cantidad }} ml</span>,
-                <span class="macro-hora">{{ registro.Fecha | date:'shortTime' }}</span>
+                <span class="macro-hora">{{ registro.fecha | date:'shortTime' }}</span>
               </p>
             </div>
             <button class="btn btn-sm btn-outline-danger" (click)="seleccionarRegistro(registro)" data-bs-toggle="modal" data-bs-target="#ModalAguaEliminar">

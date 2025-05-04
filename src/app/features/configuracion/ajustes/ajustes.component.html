@@ -1,94 +1,125 @@
 <div class="container mt-4 mb-5" style="padding-bottom: 80px;">
-    <h4 class="text-center mb-4">Ajustes de Cuenta</h4>
-    <div class="card shadow-sm mb-3">
-      <div class="card-header bg-dark text-white d-flex align-items-center">
-        <i class="bi bi-person-fill me-2"></i>
-        Información Personal
+  <h4 class="text-center mb-4">Ajustes de Cuenta</h4>
+  <div class="card shadow-sm mb-3">
+    <div class="card-header bg-dark text-white d-flex align-items-center">
+      <i class="bi bi-person-fill me-2"></i>
+      Información Personal
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" [(ngModel)]="usuario.nombre">
       </div>
-      <div class="card-body">
-        <div class="mb-3">
-          <label class="form-label">Nombre</label>
-          <input type="text" class="form-control" [(ngModel)]="usuario.Nombre">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Correo</label>
-          <input type="email" class="form-control" [(ngModel)]="usuario.Correo">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Fecha de nacimiento</label>
-          <input type="date" class="form-control" [(ngModel)]="usuario.FechaNacimiento">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Altura (cm)</label>
-            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.Altura">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Peso (kg)</label>
-            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.Peso">
-          </div>
-        
-          <div class="mb-3">
-            <label class="form-label">Género</label>
-            <select class="form-select" [(ngModel)]="usuario.Sexo">
-              <option *ngFor="let genero of Sexos" [value]="genero.value">{{ genero.label }}</option>
-            </select>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Nivel de actividad física</label>
-            <select class="form-select" [(ngModel)]="usuario.ActividadFisica">
-              <option *ngFor="let act of Actividades" [value]="act.value">{{ act.label }}</option>
-            </select>
-          </div>          
+      <div class="mb-3">
+        <label class="form-label">Correo</label>
+        <input type="email" class="form-control" [(ngModel)]="usuario.correo">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Fecha de nacimiento</label>
+        <input type="date" class="form-control" [(ngModel)]="usuario.fechaNacimiento">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Altura (cm)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.altura">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Peso (kg)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.peso">
+      </div>
+
+      <!-- Género -->
+      <div class="mb-3">
+        <label class="form-label">Género</label>
+        <select class="form-select" [(ngModel)]="usuario.idGenero">
+          <option *ngFor="let genero of Sexos" [value]="genero.value">
+            {{ genero.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Actividad Física -->
+      <div class="mb-3">
+        <label class="form-label">Nivel de actividad física</label>
+        <select class="form-select" [(ngModel)]="usuario.idActividad">
+          <option *ngFor="let act of Actividades" [value]="act.value">
+            {{ act.label }}
+          </option>
+        </select>
       </div>
 
     </div>
-    <div class="card shadow-sm mb-3">
-      <div class="card-header bg-dark text-white d-flex align-items-center">
-        <i class="bi bi-bullseye me-2"></i>
-        Objetivos
-      </div>
-      <div class="card-body row">
-        <div class="col-md-6 mb-3">
-          <label class="form-label macro-calorias">Meta de calorías diarias</label>
-          <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaCalorias">
-        </div>
-        <div class="col-md-6 mb-3">
-            <label class="form-label macro-proteina">Meta de proteína (g)</label>
-            <input type="number" step="0.1"  class="form-control" [(ngModel)]="usuario.MetaProteinas">
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label macro-carbohidratos">Meta de carbohidratos (g)</label>
-            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaCarbohidratos">
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label macro-sodio">Meta de sodio (mg)</label>
-            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaSodio">
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label macro-fibra">Meta de fibra (g)</label>
-            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaFibra">
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label macro-azucares">Meta de azucares (g)</label>
-            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaAzucares">
-          </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label macro-grasas">Meta de grasa (g)</label>
-          <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaGrasas">
-        </div>
-        <div class="col-md-6 mb-3">
-            <label class="form-label macro-agua">Meta de agua (ml)</label>
-            <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.MetaAgua">
-          </div>
-          
-      </div>
+
+  </div>
+  <div class="card shadow-sm mb-3">
+    <div class="card-header bg-dark text-white d-flex align-items-center">
+      <i class="bi bi-bullseye me-2"></i>
+      Objetivos
     </div>
-    <div class="d-grid mt-4">
-      <button class="btn btn-dark" (click)="guardarCambios()">
-        <i class="bi bi-save-fill me-1"></i> Guardar Cambios
+    <div class="card-body row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label macro-calorias">Meta de calorías diarias</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.metaCalorias">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label macro-proteina">Meta de proteína (g)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.metaProteinas">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label macro-carbohidratos">Meta de carbohidratos (g)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.metaCarbohidratos">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label macro-sodio">Meta de sodio (mg)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.metaSodio">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label macro-fibra">Meta de fibra (g)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.metaFibra">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label macro-azucares">Meta de azucares (g)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.metaAzucares">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label macro-grasas">Meta de grasa (g)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.metaGrasas">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label macro-agua">Meta de agua (ml)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="usuario.metaAgua">
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-header bg-dark text-white d-flex align-items-center">
+      <i class="bi bi-lock-fill me-2"></i>
+      Cambiar Contraseña
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Contraseña actual</label>
+        <input type="password" class="form-control" [(ngModel)]="passwordActual">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nueva contraseña</label>
+        <input type="password" class="form-control" [(ngModel)]="passwordNueva">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Confirmar nueva contraseña</label>
+        <input type="password" class="form-control" [(ngModel)]="passwordConfirmacion">
+      </div>
+      <button class="btn btn-warning" (click)="cambiarPassword()">
+        <i class="bi bi-key me-1"></i> Cambiar contraseña
       </button>
     </div>
   </div>
   
   
+  <div class="d-grid mt-4">
+    <button class="btn btn-dark" (click)="guardarCambios()">
+      <i class="bi bi-save-fill me-1"></i> Guardar Cambios
+    </button>
+  </div>
+</div>

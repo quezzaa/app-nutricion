@@ -14,40 +14,88 @@ import { ToastrService } from 'ngx-toastr';
     styleUrl: './ajustes.component.css'
 })
 export class AjustesComponent implements OnInit {
-Sexos = [{ value: '1', label: 'Masculino' }
-, { value: '2', label: 'Femenino' }]
-Actividades = [{ value: '1', label: 'Baja'},
-{ value: '2', label: 'Media'}, { value: '3', label: 'Alta' }]
-usuario: Usuario={
-  Nombre: '',
-  Apellidos: '',
-  Correo: '',
-  FechaNacimiento: new Date(),
-  Sexo: 'Masculino',
-  Altura: 0,
-  Peso: 0,
-  ActividadFisica: 'Baja',
-  MetaCalorias: 0,
-  MetaProteinas: 0,
-  MetaCarbohidratos: 0,
-  MetaGrasas: 0,
-  MetaAgua: 0,
-  MetaAzucares: 0,
-  MetaSodio: 0,
-  MetaFibra:0
-}
+  usuario: Usuario = {
+    idUsuario: 0,
+    idGenero: 1,
+    idActividad: 1,
+    nombre: '',
+    correo: '',
+    fechaNacimiento: '',
+    altura: 0,
+    peso: 0,
+    metaCalorias: 0,
+    metaProteinas: 0,
+    metaCarbohidratos: 0,
+    metaFibra: 0,
+    metaAzucares: 0,
+    metaSodio: 0,
+    metaGrasas: 0,
+    metaAgua: 0
+  };
 
-constructor(private ajustesPerfilService: AjustesPerfilServiceService, private toastr:ToastrService) { }
+  Sexos = [
+    { value: 1, label: 'Masculino' },
+    { value: 2, label: 'Femenino' }
+  ];
 
-ngOnInit(): void {
-  const usuarioGuardado = this.ajustesPerfilService.obtener();
-  if (usuarioGuardado) {
-    this.usuario = usuarioGuardado;
+  Actividades = [
+    { value: 1, label: 'Sedentario' },
+    { value: 2, label: 'Ligero' },
+    { value: 3, label: 'Moderado' },
+    { value: 4, label: 'Activo' },
+    { value: 5, label: 'Muy activo' }
+  ];
+
+
+  constructor(
+    private ajustesPerfilService: AjustesPerfilServiceService,
+    private toastr: ToastrService,
+    private router: RouterModule,
+  ) {}
+
+  passwordActual: string = '';
+  passwordNueva: string = '';
+  passwordConfirmacion: string = '';
+  
+  async ngOnInit(): Promise<void> {
+    const idUsuario = sessionStorage.getItem('userId');
+    if (idUsuario) {
+      const datos = await this.ajustesPerfilService.obtenerUsuarioDesdeDB(parseInt(idUsuario));
+      if (datos) this.usuario = datos;
+    }
   }
+  
+  async guardarCambios() {
+    const exito = await this.ajustesPerfilService.actualizarUsuario(this.usuario);
+    if (exito) {
+      this.toastr.success('Ajustes guardados', 'Éxito');
+    } else {
+      this.toastr.error('Error al guardar', 'Error');
+    }
+  }
+  
+  async cambiarPassword() {
+    if (this.passwordNueva !== this.passwordConfirmacion) {
+      this.toastr.error('Las contraseñas no coinciden', 'Error');
+      return;
+    }
+  
+    const exito = await this.ajustesPerfilService.cambiarPassword(
+      this.usuario.idUsuario,
+      this.passwordActual,
+      this.passwordNueva
+    );
+  
+    if (exito) {
+      this.toastr.success('Contraseña actualizada', 'Éxito');
+      this.passwordActual = '';
+      this.passwordNueva = '';
+      this.passwordConfirmacion = '';
+    } else {
+      this.toastr.error('Contraseña actual incorrecta', 'Error');
+    }
+  }
+  
+
 }
 
-  guardarCambios() {
-    this.ajustesPerfilService.guardar(this.usuario);
-    this.toastr.success('Ajustes guardados', 'Éxito');
-  }
-}

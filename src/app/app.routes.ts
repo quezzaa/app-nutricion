@@ -5,6 +5,7 @@ import { FormularioAlimentoComponent } from './features/registro-alimento/formul
 import { FormularioAguaComponent } from './features/registro-agua/formulario-agua/formulario-agua.component';   
 import { ResumenComponent } from './features/resumen-dia/resumen/resumen.component';
 import { RegistroComidaComponent } from './features/registro-comida/registro-comida.component';
+import { LoginComponent } from './login/login/login.component';
 
 export const routes: Routes = [
   { path: 'registro-alimento', component: FormularioAlimentoComponent },
@@ -13,7 +14,8 @@ export const routes: Routes = [
   { path: 'registro-agua', component: FormularioAguaComponent },
   { path: 'configuracion', component: AjustesComponent},
   {path: 'registro-comida', component: RegistroComidaComponent}, 
-  { path: '', redirectTo: '/resumen-dia', pathMatch: 'full' },
+  {path: 'login', component: LoginComponent}, 
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 

@@ -11,13 +11,13 @@
         <div class="col-6">
           <p>
             <strong class="macro-calorias">Calorías:</strong> {{ resumen.calorias | number:'1.2-2' }}
-            / {{ metas.MetaCalorias | number:'1.2-2' }} kcal
-            <span *ngIf="(resumen.calorias / metas.MetaCalorias) * 100 > 100"
+            / {{ usuario.metaCalorias | number:'1.2-2' }} kcal
+            <span *ngIf="(resumen.calorias / usuario.metaCalorias) * 100 > 100"
               class="text-danger ms-2">Completado!</span>
           </p>
           <div class="progress-bar-container aling-text-center">
             <div class="progress-bar bar-c" [ngStyle]="{ 'width': porcentajes.calorias + '%' }">
-              <strong class="align-text-center">{{ (resumen.calorias / metas.MetaCalorias) * 100 | number:'1.2-2'
+              <strong class="align-text-center">{{ (resumen.calorias / usuario.metaCalorias) * 100 | number:'1.2-2'
                 }}%</strong>
             </div>
           </div>
@@ -26,13 +26,13 @@
           <!-- Proteína -->
           <p>
             <strong class="macro-proteina">Proteína:</strong> {{ resumen.proteina | number:'1.2-2' }}
-            / {{ metas.MetaProteinas | number:'1.2-2' }} g
-            <span *ngIf="(resumen.proteina / metas.MetaProteinas) * 100 > 100"
+            / {{ usuario.metaProteinas | number:'1.2-2' }} g
+            <span *ngIf="(resumen.proteina / usuario.metaProteinas) * 100 > 100"
               class="text-danger ms-2">Completado!</span>
           </p>
           <div class="progress-bar-container aling-text-center">
             <div class="progress-bar bar-p" [ngStyle]="{ 'width': porcentajes.proteina + '%' }">
-              <strong class="align-text-center">{{ (resumen.proteina / metas.MetaProteinas) * 100 | number:'1.2-2'
+              <strong class="align-text-center">{{ (resumen.proteina / usuario.metaProteinas) * 100 | number:'1.2-2'
                 }}%</strong>
             </div>
           </div>
@@ -41,13 +41,13 @@
           <!-- Carbohidratos -->
           <p>
             <strong class="macro-carbohidratos">Carbohidratos:</strong> {{ resumen.carbohidratos | number:'1.2-2' }}
-            / {{ metas.MetaCarbohidratos | number:'1.2-2' }} g
-            <span *ngIf="(resumen.carbohidratos / metas.MetaCarbohidratos) * 100 > 100"
+            / {{ usuario.metaCarbohidratos | number:'1.2-2' }} g
+            <span *ngIf="(resumen.carbohidratos / usuario.metaCarbohidratos) * 100 > 100"
               class="text-danger ms-2">Completado!</span>
           </p>
           <div class="progress-bar-container aling-text-center">
             <div class="progress-bar bar-ca" [ngStyle]="{ 'width': porcentajes.carbohidratos + '%' }">
-              <strong class="align-text-center">{{ (resumen.carbohidratos / metas.MetaCarbohidratos) * 100 |
+              <strong class="align-text-center">{{ (resumen.carbohidratos / usuario.metaCarbohidratos) * 100 |
                 number:'1.2-2' }}%</strong>
             </div>
           </div>
@@ -56,12 +56,12 @@
           <!-- Grasas -->
           <p>
             <strong class="macro-grasas">Grasas:</strong> {{ resumen.grasas | number:'1.2-2' }}
-            / {{ metas.MetaGrasas | number:'1.2-2' }} g
-            <span *ngIf="(resumen.grasas / metas.MetaGrasas) * 100 > 100" class="text-danger ms-2">Completado!</span>
+            / {{ usuario.metaGrasas | number:'1.2-2' }} g
+            <span *ngIf="(resumen.grasas / usuario.metaGrasas) * 100 > 100" class="text-danger ms-2">Completado!</span>
           </p>
           <div class="progress-bar-container aling-text-center">
             <div class="progress-bar bar-g" [ngStyle]="{ 'width': porcentajes.grasas + '%' }">
-              <strong class="align-text-center">{{ (resumen.grasas / metas.MetaGrasas) * 100 | number:'1.2-2'
+              <strong class="align-text-center">{{ (resumen.grasas / usuario.metaGrasas) * 100 | number:'1.2-2'
                 }}%</strong>
             </div>
           </div>
@@ -70,12 +70,12 @@
           <!-- Fibra -->
           <p>
             <strong class="macro-fibra">Fibra:</strong> {{ resumen.fibra | number:'1.2-2' }}
-            / {{ metas.MetaFibra | number:'1.2-2' }} g
-            <span *ngIf="(resumen.fibra / metas.MetaFibra) * 100 > 100" class="text-danger ms-2">Completado!</span>
+            / {{ usuario.metaFibra | number:'1.2-2' }} g
+            <span *ngIf="(resumen.fibra / usuario.metaFibra) * 100 > 100" class="text-danger ms-2">Completado!</span>
           </p>
           <div class="progress-bar-container aling-text-center">
             <div class="progress-bar bar-f" [ngStyle]="{ 'width': porcentajes.fibra + '%' }">
-              <strong class="align-text-center">{{ (resumen.fibra / metas.MetaFibra) * 100 | number:'1.2-2' }}%</strong>
+              <strong class="align-text-center">{{ (resumen.fibra / usuario.metaFibra) * 100 | number:'1.2-2' }}%</strong>
             </div>
           </div>
         </div>
@@ -84,13 +84,13 @@
           <!-- Azúcares -->
           <p>
             <strong class="macro-azucares">Azúcares:</strong> {{ resumen.azucares | number:'1.2-2' }}
-            / {{ metas.MetaAzucares | number:'1.2-2' }} g
-            <span *ngIf="(resumen.azucares / metas.MetaAzucares) * 100 > 100"
+            / {{ usuario.metaAzucares | number:'1.2-2' }} g
+            <span *ngIf="(resumen.azucares / usuario.metaAzucares) * 100 > 100"
               class="text-danger ms-2">Completado!</span>
           </p>
           <div class="progress-bar-container aling-text-center">
             <div class="progress-bar bar-az" [ngStyle]="{ 'width': porcentajes.azucares + '%' }">
-              <strong class="align-text-center">{{ (resumen.azucares / metas.MetaAzucares) * 100 | number:'1.2-2'
+              <strong class="align-text-center">{{ (resumen.azucares / usuario.metaAzucares) * 100 | number:'1.2-2'
                 }}%</strong>
             </div>
           </div>
@@ -100,12 +100,12 @@
           <!-- Sodio -->
           <p>
             <strong class="macro-sodio">Sodio:</strong> {{ resumen.sodio | number:'1.2-2' }}
-            / {{ metas.MetaSodio | number:'1.2-2' }} mg
-            <span *ngIf="(resumen.sodio / metas.MetaSodio) * 100 > 100" class="text-danger ms-2">Completado!</span>
+            / {{ usuario.metaSodio | number:'1.2-2' }} mg
+            <span *ngIf="(resumen.sodio / usuario.metaSodio) * 100 > 100" class="text-danger ms-2">Completado!</span>
           </p>
           <div class="progress-bar-container aling-text-center">
             <div class="progress-bar bar-s" [ngStyle]="{ 'width': porcentajes.sodio + '%' }">
-              <strong class="align-text-center">{{ (resumen.sodio / metas.MetaSodio) * 100 | number:'1.2-2' }}%</strong>
+              <strong class="align-text-center">{{ (resumen.sodio / usuario.metaSodio) * 100 | number:'1.2-2' }}%</strong>
             </div>
           </div>
         </div>
@@ -113,12 +113,12 @@
           <!-- Agua -->
           <p>
             <strong class="macro-agua">Agua:</strong> {{ resumen.agua | number:'1.2-2' }}
-            / {{ metas.MetaAgua | number:'1.2-2' }} ml
-            <span *ngIf="(resumen.agua / metas.MetaAgua) * 100 > 100" class="text-danger ms-2">Completado!</span>
+            / {{ usuario.metaAgua | number:'1.2-2' }} ml
+            <span *ngIf="(resumen.agua / usuario.metaAgua) * 100 > 100" class="text-danger ms-2">Completado!</span>
           </p>
           <div class="progress-bar-container aling-text-center">
             <div class="progress-bar bar-a" [ngStyle]="{ 'width': porcentajes.agua + '%' }">
-              <strong class="align-text-center">{{ (resumen.agua / metas.MetaAgua) * 100 | number:'1.2-2' }}%</strong>
+              <strong class="align-text-center">{{ (resumen.agua / usuario.metaAgua) * 100 | number:'1.2-2' }}%</strong>
             </div>
           </div>
         </div>
